@@ -1,3 +1,4 @@
+/* ½â·¨Ò»£º*/
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
@@ -20,7 +21,33 @@ public:
             ++pos;
         }
         
-        //åŒ…å«æœ€åä¸€ä¸ªå­—ç¬¦çš„ä¸é‡å¤å­å­—ç¬¦ä¸²è¿˜æœªåˆ¤æ–­æ˜¯å¦ä¸ºæœ€å¤§é•¿åº¦ï¼Œéœ€è¦åˆ¤æ–­ä¸€æ¬¡
+        //°üº¬×îºóÒ»¸ö×Ö·ûµÄ²»ÖØ¸´×Ó×Ö·û´®»¹Î´ÅĞ¶ÏÊÇ·ñÎª×î´ó³¤¶È£¬ĞèÒªÅĞ¶ÏÒ»´Î
         return maxLength > hash.size() ? maxLength : hash.size();
+    }
+};
+
+/* ½â·¨¶ş£º
+ * startÖ¸ÏòĞÂ×Ö·û´®ÆğÊ¼µÄÇ°Ò»¸ö×Ö·û£¬dist±íÊ¾Ã¿¸ö×Ö·û×îºóÒ»´Î³öÏÖµÄÎ»ÖÃ£¬Ã¿Ò»´Î
+ * ¸üĞÂdistÖĞÄ³×Ö·ûµ±Ç°×îºóÒ»´Î³öÏÖÎ»ÖÃÊ±£¬²é¿´Ç°Ò»´Î³öÏÖÎ»ÖÃÊÇ·ñÎ»ÓÚstartÖ®ºó,
+ * ÊÇ£¬ÔòÒâÎ¶×ÅÖØ¸´×Ö·û³öÏÖ£¬Ê¹startÖ¸Ïò¸ÃÎ»ÖÃ£¨ÒòÎªstartÖ¸ÏòµÄÊÇĞÂ×Ö·û´®ÆğÊ¼Ç°Ò»
+ * ¸ö×Ö·û£©¡£ 
+ */
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int maxLen = 0, start = -1;
+        vector<int> dist(256, -1);
+        
+        for(int pos = 0; pos != s.size(); ++pos)
+        {
+            if (dist[s[pos]] > start)
+            {
+                start = dist[s[pos]];
+            }
+            dist[s[pos]] = pos;
+            maxLen = max(maxLen, pos - start);
+        }
+        
+        return maxLen;
     }
 };
